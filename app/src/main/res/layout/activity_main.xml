@@ -1,14 +1,170 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.zfbpaysdk.pay.zfbpaysdk.MainActivity">
 
-    <Button
-        android:id="@+id/zfbpay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="支付宝支付" />
-</RelativeLayout>
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:orientation="horizontal"
+       android:layout_height="wrap_content">
+
+       <Button
+           android:id="@+id/zfbpay"
+           android:layout_width="0dp"
+           android:layout_weight="1"
+           android:layout_height="wrap_content"
+           android:text="支付宝app支付" />
+
+       <Button
+           android:id="@+id/wxok"
+           android:layout_width="0dp"
+           android:layout_weight="1"
+           android:layout_height="wrap_content"
+           android:onClick="wxok"
+           android:text="微信app支付" />
+
+       <Button
+           android:id="@+id/wxpublicsignal"
+           android:layout_width="0dp"
+           android:layout_weight="1"
+           android:layout_height="wrap_content"
+           android:onClick="wxok"
+           android:text="微信公众号支付" />
+
+       <Button
+           android:id="@+id/publicsinalquery"
+           android:layout_width="0dp"
+           android:layout_weight="1"
+           android:layout_height="wrap_content"
+           android:onClick="wxok"
+           android:text="微信公众号支付结果查询" />
+
+       <Button
+           android:id="@+id/other"
+           android:layout_width="0dp"
+           android:layout_weight="1"
+           android:layout_height="wrap_content"
+           android:onClick="wxok"
+           android:text="跳转到其他界面" />
+
+   </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/zfbwappay"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="支付宝wap支付" />
+
+        <Button
+            android:id="@+id/zfbwapquery"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="支付宝wap支付结果查询" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/alicodepay"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="支付宝扫码支付" />
+
+        <Button
+            android:id="@+id/alicodepayquery"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="支付宝扫码支付支付结果查询" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/wxcodepay"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="微信扫码支付方式1" />
+
+        <Button
+            android:id="@+id/wxcodepayquery"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="微信扫码支付方式1支付结果查询" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/wxcodepay2"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="微信扫码支付方式2" />
+
+        <Button
+            android:id="@+id/wxcodepayquery2"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="微信扫码支付方式2支付结果查询" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/sancode"
+            android:onClick="scanCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="打开微信扫描二维码" />
+
+        <ImageView
+            android:id="@+id/wxcodeimages"
+            android:layout_width="200dp"
+            android:layout_height="200dp" />
+
+    </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+</LinearLayout>

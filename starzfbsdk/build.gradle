@@ -1,132 +1,115 @@
 apply plugin: 'com.android.library'
-// add plugin
-apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'com.jfrog.bintray'
-version = '1.0.1'
 
 
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.0"
-
+    useLibrary 'org.apache.http.legacy'
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 25
+        targetSdkVersion 22
         versionCode 1
-        versionName "1.0.1"
+        versionName "1.5.8"
+//        manifestPlaceholders = [
+//                GETUI_APP_ID    : "diuZy7v1jN61qUUkAuky6A",
+//                GETUI_APP_KEY   : "Mw76eZkQxJ9rMymuDZn1bA",
+//                GETUI_APP_SECRET: "NjmdIhHVEA6hmBqeRsA6B8"
+//        ]
+//        ndk {
+////            abiFilters "arm64-v8a", "armeabi", "armeabi-v7a", "mips", "mips64", "x86", "x86_64"
+//            abiFilters "armeabi", "armeabi-v7a", "x86_64"
+//        }
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+            minifyEnabled true
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    lintOptions {
+        abortOnError false
+    }
+
+    sourceSets {
+        main {
+            assets.srcDirs = ['src/main/assets', 'ovpnlibs/assets']
+            jniLibs.srcDirs = ['gtjni/jniLibs']
+            jni.srcDirs = [] //disable automatic ndk-build
+        }
+        ovpn3 {
+
+        }
+        debug {
+
+        }
+
+        release {
+
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
     }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:25.1.0'
+    // compile 'com.android.support:appcompat-v7:25.0.0'
+    //    compile 'com.android.support:support-v4:25.0.0'
+    //    compile 'com.squareup.okhttp3:okhttp:3.4.1'
+    //    compile 'com.squareup.okio:okio:1.7.0'
+    compile 'com.android.support:support-v4:+'
+    compile 'com.android.support:appcompat-v7:+'
+//    compile 'com.google.zxing:core:3.2.1'
+//    compile 'com.google.zxing:android-core:3.2.1'
 }
 
-////添加
-//publish {
-//    userOrg = '2219736084wang'//bintray.com用户名
-//    groupId = 'com.wgygz'//jcenter上的路径
-//    artifactId = 'starzfbsdk'//项目名称
-//    publishVersion = '1.0.1'//版本号
-//    desc = 'Oh hi, this is a nice description for a project, right?'//描述，不重要
-//    website = 'https://github.com/hyman/basetools'//网站，不重要；尽量模拟github上的地址，例如我这样的；当然你有地址最好了
+//task makeJar(type: Copy) {
+//    delete 'build/libs/mylibrary.jar' //删除已经存在的jar包
+//    from('build/intermediates/bundles/release/')//从该目录下加载要打包的文件
+//    into('build/libs/')//jar包的保存目录
+//    include('classes.jar')//设置过滤，只打包classes文件
+//    rename('classes.jar', 'mylibrary.jar')//重命名，mylibrary.jar 根据自己的需求设置
+//}
+//makeJar.dependsOn(build)
+
+//task makeJar(type: proguard.gradle.ProGuardTask,dependsOn:"build") {
+//
+//    delete'build/outputs/jar/starpays.jar'//删除之前编译混淆jar包
+//
+//    injars'build/intermediates/bundles/release/classes.jar'//项目编译但未混淆的jar
+//
+//    outjars'libs/starpay.jar'//混淆后的jar路径
+//
+//    configuration'proguard-rules.pro'// 混淆配置文件
+//
 //}
 
-task sourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
-}
-
-task javadoc(type: Javadoc) {
-    source = android.sourceSets.main.java.srcDirs
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-artifacts {
-    archives javadocJar
-    archives sourcesJar
-}
-
-group = 'net.cpacm.simpleslider'
-install {
-    repositories.mavenInstaller {
-        pom.project {
-            packaging 'aar'
-            groupId 'net.cpacm.simpleslider' //自己定义的组名
-            artifactId 'library'
-
-            name 'simpleslider'
-            description 'A simple slider allows you to easily use.'
-            url 'https://github.com/cpacm/SimpleSlider'
-            inceptionYear '2016'
-
-            licenses {
-                license {
-                    name 'The Apache Software License, Version 2.0'
-                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                    distribution 'repo'
-                }
-            }
-            scm {
-                connection 'https://github.com/cpacm/SimpleSlider.git'
-                url 'https://github.com/cpacm/SimpleSlider'
-
-            }
-            developers {
-                developer {
-                    name '2219736084wang'
-                    email '2219736084wang@gmail.com'
-                }
-            }
-        }
-
-    }
-}
-
-// Bintray
-
-//获取local.propertes的信息
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
-
-bintray {
-    user = properties.getProperty("bintray.user")
-    key = properties.getProperty("bintray.apikey")
-    publish = true
-    configurations = ['archives']
-    pkg {
-        //填入 bintray 上对应的 package 信息
-        repo = 'maven'
-        name = 'SimpleSlider'
-        vcsUrl = 'https://github.com/cpacm/SimpleSlider.git'
-        websiteUrl = 'https://github.com/cpacm/SimpleSlider'
-        licenses = ['Apache-2.0']
-        issueTrackerUrl = 'https://github.com/cpacm/SimpleSlider/issues'
-        publicDownloadNumbers = true
-        version {
-            name = '1.0.0'
-            desc = 'simple slider release'
-            vcsTag = '1.0.0'
-            attributes = ['gradle-plugin': 'com.use.less:com.use.less.gradle:gradle-useless-plugin']
-        }
-    }
-}
-
-tasks.withType(JavaCompile) {
-    options.encoding = "UTF-8"
-}
-
-task findConventions << {
-    println project.getConvention()
-}
+//ext {
+//    bintrayRepo = 'maven'
+//    bintrayName = 'starzfbsdk'//是建立的package name
+//    publishedGroupId = 'com.wzpay.starzfbsdk'
+//    libraryName = 'starzfbsdk'
+//    artifact = 'starzfbsdk'
+//    libraryDescription = 'A pickerView on Android'
+//    siteUrl = 'https://github.com/guyuegeblog/ZfbPaySdk'
+//    gitUrl = 'https://github.com/guyuegeblog/ZfbPaySdk.git'
+//    libraryVersion = '1.0.1'
+//    developerId = '2219736084wang'
+//    developerName = '2219736084wang'
+//    developerEmail = '2219736084wang@gemail.com'
+//    licenseName = 'The Apache Software License, Version 2.0'
+//    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+//    allLicenses = ["Apache-2.0"]
+//}
+//apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+//apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
